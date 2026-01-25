@@ -81,7 +81,7 @@ const MORSE_REVERSE = Object.entries(MORSE_MAP).reduce((acc, [key, value]) => {
 const applyTheme = (mode) => {
   const isDark = mode === "dark";
   document.body.classList.toggle("theme-dark", isDark);
-  themeToggle.setAttribute("aria-pressed", String(isDark));
+  themeToggle.checked = isDark;
 };
 
 const storedTheme = localStorage.getItem("theme");
@@ -252,10 +252,12 @@ const stopAudio = () => {
   }
 };
 
-const playMorse = (morseString) => {
+const playMorse = (morseString, reportStatus) => {
   const cleaned = morseString.trim();
   if (!cleaned) {
-    setStatus("Nothing to play yet.", "warn");
+    if (reportStatus) {
+      reportStatus("Nothing to play.", "warn");
+    }
     return;
   }
 
@@ -307,14 +309,14 @@ clearBtn.addEventListener("click", handleClear);
 copyBtn.addEventListener("click", handleCopy);
 decodeBtn.addEventListener("click", handleDecode);
 clearDecodeBtn.addEventListener("click", handleClearDecode);
-playOutputBtn.addEventListener("click", () => playMorse(morseOutput.value));
-playInputBtn.addEventListener("click", () => playMorse(morseInput.value));
+playOutputBtn.addEventListener("click", () => playMorse(morseOutput.value, setStatus));
+playInputBtn.addEventListener("click", () => playMorse(morseInput.value, setDecodeStatus));
 stopAudioBtn.addEventListener("click", stopAudio);
 speedRange.addEventListener("input", () => {
   speedValue.textContent = speedRange.value;
 });
-themeToggle.addEventListener("click", () => {
-  const nextTheme = document.body.classList.contains("theme-dark") ? "light" : "dark";
+themeToggle.addEventListener("change", () => {
+  const nextTheme = themeToggle.checked ? "dark" : "light";
   localStorage.setItem("theme", nextTheme);
   applyTheme(nextTheme);
 });

@@ -4,21 +4,25 @@ A clean, responsive text-to-Morse converter built with plain HTML, CSS, and Java
 
 ## Live usage
 
-Open `index.html` locally or deploy to GitHub Pages.
+Run the Flask app locally or deploy it with a WSGI host.
 
 ## Features
 
 - Text to Morse conversion with punctuation support
 - Friendly status feedback for unsupported characters
 - Copy-to-clipboard action
+- Light/Dark theme toggle with saved preference
 - Quick reference grid for Morse symbols
 - Responsive layout for mobile and desktop
 
 ## Project structure
 
-- `index.html` - UI structure and semantic markup
-- `style.css` - visual design and layout
-- `script.js` - conversion logic and UI behavior
+- `app.py` - Flask entrypoint
+- `app/__init__.py` - app factory and routes
+- `app/templates/index.html` - UI structure and semantic markup
+- `app/static/style.css` - visual design and layout
+- `app/static/script.js` - conversion logic and UI behavior
+- `.env` - local dev settings (optional)
 
 ## How it works (with principles)
 
@@ -82,22 +86,22 @@ const toMorse = (input) => {
 ## Run locally
 
 ```bash
-open index.html
+python3 -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
+python app.py
 ```
 
-## Deploy to GitHub Pages
+Then open `http://127.0.0.1:5000`.
 
-1. Push this folder to a GitHub repo.
-2. Go to Settings → Pages.
-3. Select the `main` branch and `/root` folder.
-4. Save and open the provided URL.
+## Deploy
+
+Use any Flask-compatible host (Render, Railway, Fly.io, etc.). For a simple setup, run it behind Gunicorn.
 
 ## Possible extensions
 
 - Add Morse-to-text decoding
 - Add audio playback for dots and dashes
-- Add theme toggles and saved preferences
+- Add theme presets beyond light/dark
 
 ---
-
-Built for clear UI, simple logic, and easy hosting.

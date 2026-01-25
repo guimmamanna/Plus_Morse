@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Pulse Morse - Text to Morse Converter</title>
-    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
   </head>
   <body>
     <div class="background"></div>
@@ -12,12 +12,12 @@
       <header class="hero">
         <div class="tag-row">
           <p class="tag">MGC237</p>
-          <button class="theme-toggle" id="theme-toggle" type="button" aria-pressed="false">
-            <span class="toggle-label">Light/Dark</span>
-            <span class="toggle-track" aria-hidden="true">
-              <span class="toggle-knob"></span>
-            </span>
-          </button>
+          <div class="toggle-switch">
+            <label class="switch-label">
+              <input id="theme-toggle" type="checkbox" class="checkbox" aria-label="Toggle light or dark mode" />
+              <span class="slider"></span>
+            </label>
+          </div>
         </div>
         <h1>Pulse Morse</h1>
         <p class="subtitle">Translate plain text into crisp Morse code with instant feedback.</p>
@@ -97,6 +97,6 @@
       </section>
     </main>
 
-    <script src="script.js"></script>
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
   </body>
 </html>
