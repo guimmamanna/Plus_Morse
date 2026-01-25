@@ -4,7 +4,7 @@ A Flask-powered web app that converts text to Morse, decodes Morse back to text,
 
 ## Live usage
 
-Run the Flask app locally.
+Run the Flask app locally or view it live at https://plus-morse.onrender.com/.
 
 ## Features
 
