@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pulse Morse - Text to Morse Converter</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="background"></div>
+    <main class="app">
+      <header class="hero">
+        <div class="tag-row">
+          <p class="tag">MGC237</p>
+          <button class="theme-toggle" id="theme-toggle" type="button" aria-pressed="false">
+            <span class="toggle-label">Light/Dark</span>
+            <span class="toggle-track" aria-hidden="true">
+              <span class="toggle-knob"></span>
+            </span>
+          </button>
+        </div>
+        <h1>Pulse Morse</h1>
+        <p class="subtitle">Translate plain text into crisp Morse code with instant feedback.</p>
+      </header>
+
+      <section class="panel">
+        <div class="panel-header">
+          <h2>Converter</h2>
+          <span class="status" id="status">Ready.</span>
+        </div>
+
+        <div class="grid">
+          <div class="field">
+            <label for="text-input">Text input</label>
+            <textarea id="text-input" placeholder="Type a message like: Hello Chris, meet at 8pm" rows="6"></textarea>
+          </div>
+
+          <div class="field">
+            <label for="morse-output">Morse output</label>
+            <textarea id="morse-output" readonly rows="6" placeholder="Your Morse code appears here"></textarea>
+          </div>
+        </div>
+
+        <div class="actions">
+          <button class="btn primary" id="convert-btn">Convert</button>
+          <button class="btn ghost" id="clear-btn">Clear</button>
+          <button class="btn outline" id="copy-btn">Copy Morse</button>
+        </div>
+
+        <div class="note" id="note">
+          Unsupported characters are skipped. Words are separated with <span>/</span>.
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="panel-header">
+          <h2>Decoder</h2>
+          <span class="status" id="decode-status">Waiting for Morse.</span>
+        </div>
+
+        <div class="grid">
+          <div class="field">
+            <label for="morse-input">Morse input</label>
+            <textarea id="morse-input" placeholder="Example: .... . .-.. .-.. --- / .-- --- .-. .-.. -.." rows="6"></textarea>
+          </div>
+
+          <div class="field">
+            <label for="text-output">Text output</label>
+            <textarea id="text-output" readonly rows="6" placeholder="Decoded text appears here"></textarea>
+          </div>
+        </div>
+
+        <div class="actions">
+          <button class="btn primary" id="decode-btn">Decode</button>
+          <button class="btn ghost" id="clear-decode-btn">Clear</button>
+        </div>
+
+        <div class="audio-controls">
+          <div class="field">
+            <label for="speed-range">Playback speed (WPM)</label>
+            <div class="range-row">
+              <input type="range" id="speed-range" min="8" max="24" value="14" />
+              <span id="speed-value">14</span>
+            </div>
+          </div>
+          <div class="actions">
+            <button class="btn outline" id="play-output-btn">Play Morse output</button>
+            <button class="btn outline" id="play-input-btn">Play Morse input</button>
+            <button class="btn ghost" id="stop-audio-btn">Stop</button>
+          </div>
+        </div>
+      </section>
+
+      <section class="legend">
+        <h3>Morse quick reference</h3>
+        <div class="legend-grid" id="legend-grid"></div>
+      </section>
+    </main>
+
+    <script src="script.js"></script>
+  </body>
+</html>
