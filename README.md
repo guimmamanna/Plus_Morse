@@ -98,6 +98,31 @@ Then open `http://127.0.0.1:5000`.
 
 Use any Flask-compatible host (Render, Railway, Fly.io, etc.). For a simple setup, run it behind Gunicorn.
 
+### Render
+
+1. Push this repo to GitHub.
+2. New Web Service → connect repo.
+3. Build command: `pip install -r requirements.txt`
+4. Start command: `gunicorn app:app`
+
+### Railway
+
+1. New Project → Deploy from GitHub.
+2. Build command: `pip install -r requirements.txt`
+3. Start command: `gunicorn app:app`
+
+### Fly.io
+
+1. Install `flyctl` and run `fly launch`.
+2. Set the start command to `gunicorn app:app`.
+3. Deploy with `fly deploy`.
+
+### Heroku
+
+1. Create an app: `heroku create`
+2. Deploy: `git push heroku main`
+3. Ensure the `Procfile` is present with `web: gunicorn app:app`.
+
 ## Possible extensions
 
 - Add Morse-to-text decoding
