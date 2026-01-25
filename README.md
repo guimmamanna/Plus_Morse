@@ -1,14 +1,16 @@
-# MGC237 - Text to Morse Code Converter
+# MGC237 - Morse Code Web App
 
-A clean, responsive text-to-Morse converter built with plain HTML, CSS, and JavaScript. The UI is designed for GitHub Pages hosting and focuses on clarity, accessibility, and separation of concerns.
+A Flask-powered web app that converts text to Morse, decodes Morse back to text, and plays audio signals. The UI is a responsive frontend built with HTML, CSS, and JavaScript, served by a lightweight Python backend.
 
 ## Live usage
 
-Run the Flask app locally or deploy it with a WSGI host.
+Run the Flask app locally.
 
 ## Features
 
 - Text to Morse conversion with punctuation support
+- Morse to text decoding
+- Audio playback with adjustable speed
 - Friendly status feedback for unsupported characters
 - Copy-to-clipboard action
 - Light/Dark theme toggle with saved preference
@@ -28,13 +30,14 @@ Run the Flask app locally or deploy it with a WSGI host.
 
 ### 1) Separation of concerns
 
+- Flask serves the UI while conversion logic remains in client-side JavaScript.
 - Markup stays in `index.html`, styling in `style.css`, and logic in `script.js`.
 - This keeps files focused and easier to maintain or extend.
 
 ### 2) Single responsibility and readability
 
-- `toMorse()` converts text only. It does not touch the DOM.
-- UI handlers (`handleConvert`, `handleCopy`, `handleClear`) focus on updating the interface.
+- `toMorse()` converts text only. `fromMorse()` decodes only. Neither touches the DOM.
+- UI handlers (`handleConvert`, `handleDecode`, `handleCopy`, `handleClear`) focus on updating the interface.
 - The logic is organized into small, named functions so each part is easy to follow.
 
 ### 3) Data-driven design
@@ -93,12 +96,5 @@ python app.py
 ```
 
 Then open `http://127.0.0.1:5000`.
-
-
-## Possible extensions
-
-- Add Morse-to-text decoding
-- Add audio playback for dots and dashes
-- Add theme presets beyond light/dark
 
 ---
