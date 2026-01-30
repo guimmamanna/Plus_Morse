@@ -46,6 +46,15 @@
           <button class="btn primary" id="convert-btn">Convert</button>
           <button class="btn ghost" id="clear-btn">Clear</button>
           <button class="btn outline" id="copy-btn">Copy Morse</button>
+          <button class="btn outline" id="save-favorite-btn">💾 Save</button>
+          <button class="btn outline" id="share-btn">🔗 Share</button>
+        </div>
+
+        <div class="toggle-row">
+          <label class="checkbox-label">
+            <input type="checkbox" id="realtime-toggle" />
+            <span>⚡ Real-time conversion</span>
+          </label>
         </div>
 
         <div class="note" id="note">
@@ -84,13 +93,187 @@
               <span id="speed-value">14</span>
             </div>
           </div>
+          <div class="sound-customization">
+            <div class="field">
+              <label for="frequency-range">Frequency (Hz)</label>
+              <div class="range-row">
+                <input type="range" id="frequency-range" min="400" max="1200" value="700" step="50" />
+                <span id="frequency-value">700</span>
+              </div>
+            </div>
+            <div class="field">
+              <label for="waveform-select">Waveform</label>
+              <select id="waveform-select" class="waveform-select">
+                <option value="sine">Sine</option>
+                <option value="square">Square</option>
+                <option value="triangle">Triangle</option>
+                <option value="sawtooth">Sawtooth</option>
+              </select>
+            </div>
+          </div>
           <div class="actions">
-            <button class="btn outline" id="play-output-btn">Play Morse output</button>
-            <button class="btn outline" id="play-input-btn">Play Morse input</button>
+            <button class="btn outline" id="play-output-btn">🔊 Play Morse output</button>
+            <button class="btn outline" id="play-input-btn">🔊 Play Morse input</button>
+            <button class="btn outline" id="download-audio-btn">📥 Download Audio</button>
             <button class="btn ghost" id="stop-audio-btn">Stop</button>
+          </div>
+          <div class="visual-signal" id="visual-signal" aria-hidden="true"></div>
+          <div class="morse-animation" id="morse-animation"></div>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="panel-header">
+          <h2>🎯 Interactive Input</h2>
+          <span class="status" id="tap-status">Tap to start</span>
+        </div>
+
+        <div class="tap-input-section">
+          <div class="tap-zone" id="tap-zone">
+            <div class="tap-instructions">
+              <p>Hold to send DASH (—)</p>
+              <p>Quick tap for DOT (•)</p>
+              <p class="tap-hint">Use spacebar or click here</p>
+            </div>
+            <div class="tap-output" id="tap-output"></div>
+          </div>
+          <div class="actions">
+            <button class="btn primary" id="tap-clear-btn">Clear Taps</button>
+            <button class="btn outline" id="sos-btn">🆘 Send SOS</button>
           </div>
         </div>
       </section>
+
+      <section class="panel favorites-panel" id="favorites-panel" style="display: none;">
+        <div class="panel-header">
+          <h2>💾 Saved Favorites</h2>
+          <div class="header-actions">
+            <button class="btn outline" id="export-favorites-btn">📤 Export</button>
+            <button class="btn outline" id="import-favorites-btn">📥 Import</button>
+            <button class="btn ghost" id="clear-favorites-btn">Clear All</button>
+          </div>
+        </div>
+        <div class="favorites-list" id="favorites-list">
+          <p class="empty-state">No saved messages yet. Save your frequently used messages!</p>
+        </div>
+        <input type="file" id="import-file-input" accept=".json" style="display: none;" />
+      </section>
+
+      <section class="panel practice-panel" id="practice-panel" style="display: none;">
+        <div class="panel-header">
+          <h2>🎓 Practice Mode</h2>
+          <div class="practice-stats">
+            <span id="practice-score">Score: 0</span>
+            <span id="practice-streak">Streak: 0</span>
+          </div>
+        </div>
+        <div class="toggle-row">
+          <label class="checkbox-label">
+            <input type="checkbox" id="reverse-practice-toggle" />
+            <span>🔄 Reverse Mode (Morse → Letter)</span>
+          </label>
+        </div>
+        <div class="practice-content">
+          <div class="practice-question">
+            <h3 id="practice-question-text">What is the Morse code for:</h3>
+            <div class="practice-letter" id="practice-letter">?</div>
+          </div>
+          <div class="practice-input-area">
+            <input type="text" id="practice-input" placeholder="Type the Morse code (e.g., .-)" />
+          </div>
+          <div class="actions">
+            <button class="btn primary" id="practice-submit-btn">Check Answer</button>
+            <button class="btn ghost" id="practice-skip-btn">Skip</button>
+          </div>
+          <div class="practice-feedback" id="practice-feedback"></div>
+        </div>
+      </section>
+
+      <section class="panel history-panel" id="history-panel" style="display: none;">
+        <div class="panel-header">
+          <h2>📜 Conversion History</h2>
+          <button class="btn ghost" id="clear-history-btn">Clear All</button>
+        </div>
+        <div class="history-list" id="history-list">
+          <p class="empty-state">No conversion history yet.</p>
+        </div>
+      </section>
+
+      <section class="panel stats-panel" id="stats-panel" style="display: none;">
+        <div class="panel-header">
+          <h2>📊 Statistics</h2>
+          <button class="btn ghost" id="reset-stats-btn">Reset</button>
+        </div>
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-value" id="stat-conversions">0</div>
+            <div class="stat-label">Total Conversions</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-value" id="stat-characters">0</div>
+            <div class="stat-label">Characters Converted</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-value" id="stat-practice">0</div>
+            <div class="stat-label">Practice Questions</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-value" id="stat-accuracy">0%</div>
+            <div class="stat-label">Practice Accuracy</div>
+          </div>
+        </div>
+      </section>
+
+      <div class="quick-actions">
+        <button class="btn outline" id="show-favorites-btn">💾 Favorites</button>
+        <button class="btn outline" id="show-practice-btn">🎓 Practice Mode</button>
+        <button class="btn outline" id="show-history-btn">📜 History</button>
+        <button class="btn outline" id="show-stats-btn">📊 Stats</button>
+        <button class="btn outline" id="show-shortcuts-btn">⌨️ Shortcuts</button>
+      </div>
+
+      <div class="modal" id="shortcuts-modal" style="display: none;">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h2>⌨️ Keyboard Shortcuts</h2>
+            <button class="modal-close" id="close-shortcuts-btn">✕</button>
+          </div>
+          <div class="shortcuts-list">
+            <div class="shortcut-item">
+              <kbd>Ctrl + Enter</kbd>
+              <span>Convert text to Morse</span>
+            </div>
+            <div class="shortcut-item">
+              <kbd>Ctrl + K</kbd>
+              <span>Clear all fields</span>
+            </div>
+            <div class="shortcut-item">
+              <kbd>Ctrl + C</kbd>
+              <span>Copy Morse code (when focused)</span>
+            </div>
+            <div class="shortcut-item">
+              <kbd>Ctrl + P</kbd>
+              <span>Play Morse audio</span>
+            </div>
+            <div class="shortcut-item">
+              <kbd>Ctrl + S</kbd>
+              <span>Save to favorites</span>
+            </div>
+            <div class="shortcut-item">
+              <kbd>Ctrl + H</kbd>
+              <span>Toggle history</span>
+            </div>
+            <div class="shortcut-item">
+              <kbd>Space</kbd>
+              <span>Tap Morse (when not in input)</span>
+            </div>
+            <div class="shortcut-item">
+              <kbd>Esc</kbd>
+              <span>Stop audio / Close modals</span>
+            </div>
+          </div>
+        </div>
+      </div>
 
       <section class="legend">
         <h3>Morse quick reference</h3>
